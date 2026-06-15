@@ -65,8 +65,8 @@ L'article décortique ensuite les **trois dimensions de l'empathie** (cognitive,
 | **Nom** | Ali KAOUANI |
 | **Expertise** | Ingénierie Pédagogique et Architecture de Formation |
 | **Domaines** | FOAD • LMS • IA Éducative • Didactique des Mathématiques • Psychométrie |
-| **LinkedIn** | [Voir le profil](https://www.linkedin.com/in/alikaouani) |
-| **Portfolio** | [Voir le portfolio](https://alikaouani.github.io) |
+| **LinkedIn** | [Voir le profil](https://www.linkedin.com/in/ali-kaouani) |
+| **Portfolio** | [Voir le portfolio](https://alikaouani-netizen.github.io/portfolio/) |
 
 ---
 
