@@ -55,6 +55,27 @@ L'article décortique ensuite les **trois dimensions de l'empathie** (cognitive,
 | VIII | L'intolérable : quand l'observation devient étiquetage |
 | IX | La procédure d'observation rigoureuse (logique WISC-IV) |
 | — | Conclusion + Glossaire + Sources |
+---
+
+### 02 — Les LXP certifient des compétences qu'elles n'ont jamais observées.
+
+> *"La compétence n'est pas observée directement —
+> elle est inférée à partir d'indices observables."*
+> — Ali KAOUANI
+
+**📥 [Télécharger l'article en PDF](./LXP.pdf)**
+
+#### Résumé
+
+Cet article interroge le modèle d'évaluation des Learning Experience Platforms (LXP).
+Il démontre que certifier une compétence à partir d'un quiz unique constitue
+une **inférence précipitée**, et propose un modèle alternatif centré sur les
+situations professionnelles réelles.
+
+#### Thèmes abordés
+
+`LXP` `Psychométrie` `Évaluation des compétences` `Inférence` `Ingénierie pédagogique`
+`Formation professionnelle` `EdTech` `Modèle de Rasch` `IRT`
 
 ---
 ## 👤 Profil
