@@ -23,7 +23,7 @@ Chaque publication est issue de mon expérience de terrain comme formateur, psyc
 > Il ne diagnostique pas — il observe, questionne, adapte."*  
 > — Ali KAOUANI
 
-**📥 [Télécharger l'article en PDF](./kaouani_empathie_ecole_inclusive_v3.pdf)**
+**📥 [Télécharger l'article en PDF](./v3_kaouani_empathie_ecole_inclusive.pdf)**
 
 #### Résumé
 
