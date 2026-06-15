@@ -57,7 +57,6 @@ L'article décortique ensuite les **trois dimensions de l'empathie** (cognitive,
 | — | Conclusion + Glossaire + Sources |
 
 ---
-
 ## 👤 Profil
 
 | | |
@@ -66,8 +65,6 @@ L'article décortique ensuite les **trois dimensions de l'empathie** (cognitive,
 | **Expertise** | Ingénierie Pédagogique et Architecture de Formation |
 | **Domaines** | FOAD • LMS • IA Éducative • Didactique des Mathématiques • Psychométrie |
 | **LinkedIn** | [Voir le profil](https://www.linkedin.com/in/ali-kaouani-8b952149/) |
-| ************************************************************************************* |
-
 ## 📬 Contact
 
 Pour toute collaboration, formation ou conférence :  
