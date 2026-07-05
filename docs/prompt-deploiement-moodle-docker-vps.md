@@ -131,3 +131,14 @@ CONTRAINTES
 4. Valider chaque étape en environnement de test avant la mise en production
    sur campus.educsante.academy (idéalement un sous-domaine de staging au
    préalable, ex. staging.campus.educsante.academy).
+
+---
+
+## Implémentation prête à l'emploi
+
+Une implémentation concrète de ce prompt est disponible dans
+[`deploy/moodle/`](../deploy/moodle/) : `docker-compose.yml`, configuration
+Nginx pour `campus.educsante.academy`, scripts `init-letsencrypt.sh`,
+`backup.sh`, `restore.sh`, et un `README.md` avec la procédure pas à pas
+complète (prérequis VPS, déploiement, sauvegardes, renouvellement SSL,
+mise à jour, checklist finale).

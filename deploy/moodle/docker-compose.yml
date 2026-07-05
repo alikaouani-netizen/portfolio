@@ -1,0 +1,123 @@
+networks:
+  frontend:
+  backend:
+
+volumes:
+  mariadb_data:
+  moodle_data:
+  moodledata_data:
+  redis_data:
+  certbot_etc:
+  certbot_var:
+  certbot_www:
+
+services:
+  mariadb:
+    image: bitnami/mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+    volumes:
+      - mariadb_data:/bitnami/mariadb
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MARIADB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: bitnami/redis:7.4
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/bitnami/redis/data
+    networks:
+      - backend
+
+  moodle:
+    image: bitnami/moodle:4.5
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      MOODLE_DATABASE_TYPE: mariadb
+      MOODLE_DATABASE_HOST: mariadb
+      MOODLE_DATABASE_PORT_NUMBER: 3306
+      MOODLE_DATABASE_NAME: ${MARIADB_DATABASE}
+      MOODLE_DATABASE_USER: ${MARIADB_USER}
+      MOODLE_DATABASE_PASSWORD: ${MARIADB_PASSWORD}
+      MOODLE_USERNAME: ${MOODLE_ADMIN_USER}
+      MOODLE_PASSWORD: ${MOODLE_ADMIN_PASSWORD}
+      MOODLE_EMAIL: ${MOODLE_ADMIN_EMAIL}
+      MOODLE_SITE_NAME: ${MOODLE_SITE_NAME}
+      MOODLE_HOST: ${MOODLE_DOMAIN}
+      MOODLE_REVERSEPROXY: "yes"
+      MOODLE_SSLPROXY: "yes"
+      MOODLE_SMTP_HOST: ${SMTP_HOST}
+      MOODLE_SMTP_PORT: ${SMTP_PORT}
+      MOODLE_SMTP_USER: ${SMTP_USER}
+      MOODLE_SMTP_PASSWORD: ${SMTP_PASSWORD}
+      MOODLE_SMTP_PROTOCOL: ${SMTP_PROTOCOL}
+      ALLOW_EMPTY_PASSWORD: "no"
+    volumes:
+      - moodle_data:/bitnami/moodle
+      - moodledata_data:/bitnami/moodledata
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/login/index.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Exécute le cron Moodle toutes les 60 secondes (requis par Moodle en production).
+  moodle-cron:
+    image: bitnami/moodle:4.5
+    restart: unless-stopped
+    depends_on:
+      - moodle
+    entrypoint: ["/bin/bash", "-c"]
+    command: >
+      "while true; do php /opt/bitnami/moodle/admin/cli/cron.php; sleep 60; done"
+    volumes:
+      - moodle_data:/bitnami/moodle
+      - moodledata_data:/bitnami/moodledata
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      - moodle
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - certbot_etc:/etc/letsencrypt:ro
+      - certbot_var:/var/lib/letsencrypt
+      - certbot_www:/var/www/certbot
+    networks:
+      - frontend
+
+  # Renouvelle automatiquement le certificat Let's Encrypt toutes les 12h.
+  # Le certificat initial est obtenu via scripts/init-letsencrypt.sh.
+  certbot:
+    image: certbot/certbot:latest
+    restart: unless-stopped
+    volumes:
+      - certbot_etc:/etc/letsencrypt
+      - certbot_var:/var/lib/letsencrypt
+      - certbot_www:/var/www/certbot
+    entrypoint: >
+      /bin/sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h & wait $${!}; done"
